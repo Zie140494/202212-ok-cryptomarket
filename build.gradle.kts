@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10" apply false
+    kotlin("jvm") apply false
 }
 
 group = "ru.otus.otuskotlin.cryptomarket"
