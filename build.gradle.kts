@@ -8,7 +8,9 @@ group = "ru.otus.otuskotlin.cryptomarket"
 version = "0.0.1"
 
 repositories {
+    google()
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 subprojects {
