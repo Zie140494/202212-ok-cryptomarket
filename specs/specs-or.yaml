@@ -1,0 +1,420 @@
+openapi: 3.0.4
+info:
+  title: CryptoMarket
+  description: This is a place where exchange crypto & fiat currency
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: or
+    description: Заявка (о покупке или продаже криптовалюты)
+paths:
+  /or/create:
+    post:
+      tags:
+        - or
+      summary: Create or
+      operationId: orCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrCreateResponse'
+  /or/read:
+    post:
+      tags:
+        - or
+      summary: Read or
+      operationId: orRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrReadResponse'
+  /or/update:
+    post:
+      tags:
+        - or
+      summary: Update or
+      operationId: orUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrUpdateResponse'
+  /or/delete:
+    post:
+      tags:
+        - or
+      summary: Delete or
+      operationId: orDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrDeleteResponse'
+  /or/search:
+    post:
+      tags:
+        - or
+      summary: Search or
+      operationId: orSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrSearchResponse'
+components:
+  schemas:
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/OrCreateRequest'
+          read:   '#/components/schemas/OrReadRequest'
+          update: '#/components/schemas/OrUpdateRequest'
+          delete: '#/components/schemas/OrDeleteRequest'
+          search: '#/components/schemas/OrSearchRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/OrCreateResponse'
+          read:   '#/components/schemas/OrReadResponse'
+          update: '#/components/schemas/OrUpdateResponse'
+          delete: '#/components/schemas/OrDeleteResponse'
+          search: '#/components/schemas/OrSearchResponse'
+          init: '#/components/schemas/OrInitResponse'
+
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+    OrId:
+      type: string
+      description: Идентификатор объявления
+    OrLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
+    BaseOr:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        accountNumber:
+          type: string
+          description: 20-значный номер счета
+        walletNumber:
+          type: string
+          description: Номер криптокошелька
+        fiatCurrency:
+          $ref: '#/components/schemas/FiatCurrency'
+          description: Тип фиатной валюты
+        cryptoCurrency:
+          $ref: '#/components/schemas/CryptoCurrency'
+          description: Тип крипто валюты
+        action:
+          $ref: '#/components/schemas/Action'
+          description: Тип действия(продать/купить)
+
+    OrInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    OrCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOr'
+
+    OrCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OrRequestDebug'
+        - type: object
+          properties:
+            or:
+              $ref: '#/components/schemas/OrCreateObject'
+
+    OrReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OrId'
+
+    OrReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OrRequestDebug'
+        - type: object
+          properties:
+            or:
+              $ref: '#/components/schemas/OrReadObject'
+
+    OrUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOr'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OrId'
+            lock:
+              $ref: '#/components/schemas/OrLock'
+
+    OrUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OrRequestDebug'
+        - type: object
+          properties:
+            or:
+              $ref: '#/components/schemas/OrUpdateObject'
+
+    OrDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OrId'
+            lock:
+              $ref: '#/components/schemas/OrLock'
+
+    OrDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OrRequestDebug'
+        - type: object
+          properties:
+            or:
+              $ref: '#/components/schemas/OrDeleteObject'
+
+    OrSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться в заявках
+
+    OrSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OrRequestDebug'
+        - type: object
+          properties:
+            orFilter:
+              $ref: '#/components/schemas/OrSearchFilter'
+
+    OrResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOr'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/OrId'
+            ownerId:
+              $ref: '#/components/schemas/UserId'
+            lock:
+              $ref: '#/components/schemas/OrLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/OrPermissions'
+
+    OrPermissions:
+      type: string
+      description: Доступы для клиента для операций над заявкой
+      enum:
+        - read
+        - update
+        - delete
+
+    OrResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом заявки
+          properties:
+            or:
+              $ref: '#/components/schemas/OrResponseObject'
+
+    OrResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных объектов
+          properties:
+            ors:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrResponseObject'
+
+    OrCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OrResponseSingle'
+
+    OrReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OrResponseSingle'
+
+    OrUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OrResponseSingle'
+
+    OrDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OrResponseSingle'
+
+    OrSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OrResponseMulti'
+
+    # STUBS ======================
+    OrRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    OrRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/OrDebug'
+
+    OrDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/OrRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/OrRequestDebugStubs'
+
+    OrRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badAccountNumber
+        - badWallet
+        - badCryptoCurrency
+        - badFiatCurrency
+        - cannotDelete
+        - badSearchString
+
+    FiatCurrency:
+      description: Модель фиатной валюты
+      type: string
+      enum:
+        - RUB
+    CryptoCurrency:
+      description: Модель криптовалюты
+      type: string
+      enum:
+        - BTC
+    Action:
+      description: Действия
+      type: string
+      enum:
+        - BUY
+        - SELL
