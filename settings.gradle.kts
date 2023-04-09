@@ -21,6 +21,4 @@ include("m2l3-testing")
 include("ok-cryptomarket-api-jackson")
 
 include("ok-cryptomarket-common")
-include("ok-marketplace-common")
-include("ok-cryptomarket-mappers")
 include("ok-cryptomarket-mappers")
