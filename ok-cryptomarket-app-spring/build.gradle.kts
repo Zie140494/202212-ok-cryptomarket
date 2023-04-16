@@ -9,14 +9,16 @@ plugins {
 dependencies {
     val kotestVersion: String by project
     val springdocOpenapiUiVersion: String by project
+    val springmockkVersion: String by project
+    val stdLibVersion: String by project
 
     implementation("org.springframework.boot:spring-boot-starter-actuator") // info; refresh; springMvc output
     implementation("org.springframework.boot:spring-boot-starter-web") // Controller, Service, etc..
     // implementation("org.springframework.boot:spring-boot-starter-websocket") // Controller, Service, etc..
     implementation("org.springdoc:springdoc-openapi-ui:$springdocOpenapiUiVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // from models to json and Vice versa
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.0") // for spring-boot app
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.0") // for spring-boot app
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$stdLibVersion") // for spring-boot app
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$stdLibVersion") // for spring-boot app
 
     // transport models
     implementation(project(":ok-cryptomarket-common"))
@@ -33,7 +35,7 @@ dependencies {
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux") // Controller, Service, etc..
-    testImplementation("com.ninja-squad:springmockk:4.0.2") // mockking beans
+    testImplementation("com.ninja-squad:springmockk:$springmockkVersion") // mockking beans
 }
 
 tasks {
@@ -43,15 +45,6 @@ tasks {
         }
     }
 }
-
-/*sourceSets {
-    main {
-        resources {
-            srcDirs("$rootDir/specs")
-            println(srcDirs)
-        }
-    }
-}*/
 
 tasks.withType<Test> {
     useJUnitPlatform()
