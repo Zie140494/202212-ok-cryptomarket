@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class RequestSerializationTest {
     private val request = OrCreateRequest(
+        requestType = "create",
         requestId = "123",
         debug = OrDebug(
             mode = OrRequestDebugMode.STUB,
@@ -27,7 +28,7 @@ class RequestSerializationTest {
 
         assertContains(json, Regex("\"accountNumber\":\\s*\"01234567890123456789\""))
         assertContains(json, Regex("\"mode\":\\s*\"stub\""))
-        assertContains(json, Regex("\"stub\":\\s*\"badTitle\""))
+        assertContains(json, Regex("\"stub\":\\s*\"badWallet\""))
         assertContains(json, Regex("\"requestType\":\\s*\"create\""))
     }
 

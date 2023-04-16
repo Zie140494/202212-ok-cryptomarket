@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class ResponseSerializationTest {
     private val response = OrCreateResponse(
+        responseType = "create",
         requestId = "123",
         or = OrResponseObject(
             accountNumber = "01234567890123456789",
