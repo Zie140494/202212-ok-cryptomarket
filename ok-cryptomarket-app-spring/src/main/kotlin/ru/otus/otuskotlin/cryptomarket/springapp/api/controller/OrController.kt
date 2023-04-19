@@ -2,6 +2,8 @@ package ru.otus.otuskotlin.cryptomarket.springapp.api.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.otus.otuskotlin.cryptomarket.api.models.*
+import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
+import ru.otus.otuskotlin.cryptomarket.stubs.CpmkOrStub
 
 
 @RestController

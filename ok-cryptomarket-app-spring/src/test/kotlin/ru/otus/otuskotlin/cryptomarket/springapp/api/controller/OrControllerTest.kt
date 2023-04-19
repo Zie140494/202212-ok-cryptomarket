@@ -22,41 +22,41 @@ internal class OrControllerTest {
     private lateinit var mapper: ObjectMapper
 
     @Test
-    fun createAd() = testStubAd(
+    fun createOr() = testStubOr(
         "/or/create",
         OrCreateRequest(),
         CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportCreate()
     )
 
     @Test
-    fun readAd() = testStubAd(
+    fun readOr() = testStubOr(
         "/or/read",
         OrReadRequest(),
         CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportRead()
     )
 
     @Test
-    fun updateAd() = testStubAd(
+    fun updateOr() = testStubOr(
         "/or/update",
         OrUpdateRequest(),
         CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportUpdate()
     )
 
     @Test
-    fun deleteAd() = testStubAd(
+    fun deleteOr() = testStubOr(
         "/or/delete",
         OrDeleteRequest(),
         CpmkContext().toTransportDelete()
     )
 
     @Test
-    fun searchAd() = testStubAd(
+    fun searchOr() = testStubOr(
         "/or/search",
         OrSearchRequest(),
         CpmkContext().apply { orsResponse.add(CpmkOrStub.get()) }.toTransportSearch()
     )
 
-    private fun <Req : Any, Res : Any> testStubAd(
+    private fun <Req : Any, Res : Any> testStubOr(
         url: String,
         requestObj: Req,
         responseObj: Res,
