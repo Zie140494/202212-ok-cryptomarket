@@ -8,6 +8,7 @@ pluginManagement {
     val springDependencyManagementVersion: String by settings
     val pluginSpringVersion: String by settings
     val pluginJpa: String by settings
+    val bmuschkoVersion: String by settings
 
     plugins {
 
@@ -22,6 +23,9 @@ pluginManagement {
         id("io.spring.dependency-management") version springDependencyManagementVersion apply false
         kotlin("plugin.spring") version pluginSpringVersion apply false
         kotlin("plugin.jpa") version pluginJpa apply false
+
+        id("com.bmuschko.docker-java-application") version bmuschkoVersion apply false
+        id("com.bmuschko.docker-remote-api") version bmuschkoVersion apply false
     }
 }
 
@@ -34,3 +38,7 @@ include("ok-cryptomarket-mappers")
 
 include("ok-cryptomarket-stubs")
 include("ok-cryptomarket-app-spring")
+
+
+include("ok-cryptomarket-biz")
+include("ok-cryptomarket-app-kafka")
