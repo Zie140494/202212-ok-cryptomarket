@@ -8,6 +8,7 @@ import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringSerializer
 import org.junit.Test
 import ru.otus.otuskotlin.cryptomarket.api.apiRequestSerialize
+import ru.otus.otuskotlin.cryptomarket.api.apiResponseDeserialize
 import ru.otus.otuskotlin.cryptomarket.api.models.*
 import java.util.*
 import kotlin.test.assertEquals
@@ -21,7 +22,7 @@ class KafkaControllerTest {
         val inputTopic = config.kafkaTopicIn
         val outputTopic = config.kafkaTopicOut
 
-        val app = AppKafkaConsumer(config, listOf(ConsumerStrategy()), consumer = consumer, producer = producer)
+        val app = AppKafkaConsumer(config, listOf(ConsumerStrategyCpmk()), consumer = consumer, producer = producer)
         consumer.schedulePollTask {
             consumer.rebalance(Collections.singletonList(TopicPartition(inputTopic, 0)))
             consumer.addRecord(
@@ -34,7 +35,7 @@ class KafkaControllerTest {
                         OrCreateRequest(
                         requestId = "11111111-1111-1111-1111-111111111111",
                         or = OrCreateObject(
-                            accountNumber = "01234567890123456789",
+                            accountNumber = "123",
                             walletNumber = "x0123456789",
                             fiatCurrency = FiatCurrency.RUB,
                             cryptoCurrency = CryptoCurrency.BTC,
@@ -62,7 +63,7 @@ class KafkaControllerTest {
         val result = apiResponseDeserialize<OrCreateResponse>(message.value())
         assertEquals(outputTopic, message.topic())
         assertEquals("11111111-1111-1111-1111-111111111111", result.requestId)
-        assertEquals("01234567890123456789", result.or?.accountNumber)
+        assertEquals("012345678901234567890", result.or?.accountNumber)
     }
 
     companion object {

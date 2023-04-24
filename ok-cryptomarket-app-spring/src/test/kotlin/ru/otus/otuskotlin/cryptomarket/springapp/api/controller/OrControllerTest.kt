@@ -10,6 +10,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import ru.otus.otuskotlin.cryptomarket.api.models.*
+import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
+import ru.otus.otuskotlin.cryptomarket.mappers.*
+import ru.otus.otuskotlin.cryptomarket.stubs.CpmkOrStub
 
 
 // Temporary simple test with stubs

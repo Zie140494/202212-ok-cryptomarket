@@ -13,6 +13,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.errors.WakeupException
+import ru.otus.otuskotlin.cryptomarket.biz.CpmkOrProcessor
+import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import java.time.Duration
 import java.util.*
 
@@ -28,7 +30,7 @@ interface ConsumerStrategy {
 
 class AppKafkaConsumer(
     private val config: AppKafkaConfig,
-    consumerStrategies: List<ConsumerStrategy>,
+    consumerStrategies: List<ConsumerStrategyCpmk>,
     private val processor: CpmkOrProcessor = CpmkOrProcessor(),
     private val consumer: Consumer<String, String> = config.createKafkaConsumer(),
     private val producer: Producer<String, String> = config.createKafkaProducer()

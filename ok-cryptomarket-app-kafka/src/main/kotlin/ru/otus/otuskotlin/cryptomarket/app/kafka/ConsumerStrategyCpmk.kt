@@ -1,14 +1,14 @@
 package ru.otus.otuskotlin.cryptomarket.app.kafka
 
+import ru.otus.otuskotlin.cryptomarket.api.apiRequestDeserialize
 import ru.otus.otuskotlin.cryptomarket.api.models.IRequest
 import ru.otus.otuskotlin.cryptomarket.api.models.IResponse
-import ru.otus.otuskotlin.cryptomarket.api.apiRequestDeserialize
 import ru.otus.otuskotlin.cryptomarket.api.apiResponseSerialize
 import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.mappers.fromTransport
 import ru.otus.otuskotlin.cryptomarket.mappers.toTransportOr
 
-class ConsumerStrategy : ConsumerStrategy {
+class ConsumerStrategyCpmk : ConsumerStrategy {
     override fun topics(config: AppKafkaConfig): InputOutputTopics {
         return InputOutputTopics(config.kafkaTopicIn, config.kafkaTopicOut)
     }
