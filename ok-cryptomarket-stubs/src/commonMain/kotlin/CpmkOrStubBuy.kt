@@ -6,7 +6,7 @@ object CpmkOrStubBuy {
     val OR_BUY: CpmkOr
         get() = CpmkOr(
             id = CpmkOrId("666"),
-           accountNumber = "12345678901234567890",
+           accountNumber = "012345678901234567890",
             walletNumber = "x0-9525847222266666666",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
