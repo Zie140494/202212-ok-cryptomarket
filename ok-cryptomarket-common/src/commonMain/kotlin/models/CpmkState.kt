@@ -4,4 +4,5 @@ enum class CpmkState {
     NONE,
     RUNNING,
     FAILING,
+    FINISHING
 }

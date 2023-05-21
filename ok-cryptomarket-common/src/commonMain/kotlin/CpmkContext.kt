@@ -8,6 +8,7 @@ data class CpmkContext(
     var command: CpmkCommand = CpmkCommand.NONE,
     var state: CpmkState = CpmkState.NONE,
     val errors: MutableList<CpmkError> = mutableListOf(),
+    var settings: CpmkCorSettings = CpmkCorSettings.NONE,
 
     var workMode: CpmkWorkMode = CpmkWorkMode.PROD,
     var stubCase: CpmkStubs = CpmkStubs.NONE,
@@ -16,6 +17,14 @@ data class CpmkContext(
     var timeStart: Instant = Instant.NONE,
     var orRequest: CpmkOr = CpmkOr(),
     var orFilterRequest: CpmkOrFilter = CpmkOrFilter(),
+
+    var orValidating: CpmkOr = CpmkOr(),
+    var orFilterValidating: CpmkOrFilter = CpmkOrFilter(),
+
+    var orValidated: CpmkOr = CpmkOr(),
+    var orFilterValidated: CpmkOrFilter = CpmkOrFilter(),
+
+
     var orResponse: CpmkOr = CpmkOr(),
     var orsResponse: MutableList<CpmkOr> = mutableListOf(),
 )

@@ -11,6 +11,8 @@ dependencies {
     val springdocOpenapiUiVersion: String by project
     val springmockkVersion: String by project
     val stdLibVersion: String by project
+    val coroutinesVersion: String by project
+
 
     implementation("org.springframework.boot:spring-boot-starter-actuator") // info; refresh; springMvc output
     implementation("org.springframework.boot:spring-boot-starter-web") // Controller, Service, etc..
@@ -19,20 +21,28 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // from models to json and Vice versa
     implementation("org.jetbrains.kotlin:kotlin-reflect:$stdLibVersion") // for spring-boot app
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$stdLibVersion") // for spring-boot app
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${coroutinesVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${coroutinesVersion}")
 
     // transport models
     implementation(project(":ok-cryptomarket-common"))
+//    implementation(project(":ok-cryptomarket-lib-logging-logback"))
 
     // api
     implementation(project(":ok-cryptomarket-api-jackson"))
     implementation(project(":ok-cryptomarket-mappers"))
 
-    // Stubs
-    implementation(project(":ok-cryptomarket-stubs"))
+    // Biz
+    implementation(project(":ok-cryptomarket-biz"))
+
+    // Logging
+    implementation(project(":ok-cryptomarket-mappers-log1"))
+    implementation(project(":ok-cryptomarket-api-log1"))
 
     // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
+    testImplementation(project(":ok-cryptomarket-stubs"))
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux") // Controller, Service, etc..
     testImplementation("com.ninja-squad:springmockk:$springmockkVersion") // mockking beans

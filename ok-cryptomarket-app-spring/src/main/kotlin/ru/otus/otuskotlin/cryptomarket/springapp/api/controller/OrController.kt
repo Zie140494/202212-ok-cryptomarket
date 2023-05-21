@@ -4,18 +4,20 @@ import org.springframework.web.bind.annotation.*
 import ru.otus.otuskotlin.cryptomarket.api.models.*
 import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.mappers.*
-import ru.otus.otuskotlin.cryptomarket.stubs.CpmkOrStub
+import ru.otus.otuskotlin.cryptomarket.springapp.service.CpmkOrBlockingProcessor
 
 
 @RestController
 @RequestMapping("or")
-class OrController {
-
+class OrController
+    (
+    private val processor: CpmkOrBlockingProcessor,
+) {
     @PostMapping("create")
     fun createAd(@RequestBody request: OrCreateRequest): OrCreateResponse {
         val context = CpmkContext()
         context.fromTransport(request)
-        context.orResponse = CpmkOrStub.get()
+        processor.exec(context)
         return context.toTransportCreate()
     }
 
@@ -23,7 +25,7 @@ class OrController {
     fun readAd(@RequestBody request: OrReadRequest): OrReadResponse {
         val context =CpmkContext()
         context.fromTransport(request)
-        context.orResponse = CpmkOrStub.get()
+        processor.exec(context)
         return context.toTransportRead()
     }
 
@@ -31,7 +33,7 @@ class OrController {
     fun updateAd(@RequestBody request: OrUpdateRequest): OrUpdateResponse {
         val context = CpmkContext()
         context.fromTransport(request)
-        context.orResponse = CpmkOrStub.get()
+        processor.exec(context)
         return context.toTransportUpdate()
     }
 
@@ -39,6 +41,7 @@ class OrController {
     fun deleteAd(@RequestBody request: OrDeleteRequest): OrDeleteResponse {
         val context = CpmkContext()
         context.fromTransport(request)
+        processor.exec(context)
         return context.toTransportDelete()
     }
 
@@ -46,7 +49,7 @@ class OrController {
     fun searchAd(@RequestBody request: OrSearchRequest): OrSearchResponse {
         val context = CpmkContext()
         context.fromTransport(request)
-        context.orsResponse.add(CpmkOrStub.get())
+        processor.exec(context)
         return context.toTransportSearch()
     }
 }

@@ -7,7 +7,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/v1
+  - url: http://localhost:8080/
 tags:
   - name: or
     description: Заявка (о покупке или продаже криптовалюты)
@@ -180,7 +180,6 @@ components:
           search: '#/components/schemas/OrSearchResponse'
           init: '#/components/schemas/OrInitResponse'
 
-
     UserId:
       type: string
       description: Идентификатор пользователя
@@ -210,7 +209,9 @@ components:
         action:
           $ref: '#/components/schemas/Action'
           description: Тип действия(продать/купить)
-
+        value:
+          type: float
+          description: Количество для обмена
     OrInitResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
