@@ -17,6 +17,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common:1.6.0"))
 
+                api(project(":ok-cryptomarket-lib-logging-common"))
+
                 api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
             }
         }

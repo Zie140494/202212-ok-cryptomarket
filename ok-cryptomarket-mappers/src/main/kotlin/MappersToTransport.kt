@@ -19,35 +19,40 @@ fun CpmkContext.toTransportCreate() = OrCreateResponse(
     requestId = this.requestId.asString().takeIf { it.isNotBlank() },
     result = if (state == CpmkState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
     errors = errors.toTransportErrors(),
-    or = orResponse.toTransportOr()
+    or = orResponse.toTransportOr(),
+    responseType = "create"
 )
 
 fun CpmkContext.toTransportRead() = OrReadResponse(
     requestId = this.requestId.asString().takeIf { it.isNotBlank() },
     result = if (state == CpmkState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
     errors = errors.toTransportErrors(),
-    or = orResponse.toTransportOr()
+    or = orResponse.toTransportOr(),
+    responseType = "read"
 )
 
 fun CpmkContext.toTransportUpdate() = OrUpdateResponse(
     requestId = this.requestId.asString().takeIf { it.isNotBlank() },
     result = if (state == CpmkState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
     errors = errors.toTransportErrors(),
-    or = orResponse.toTransportOr()
+    or = orResponse.toTransportOr(),
+    responseType = "update"
 )
 
 fun CpmkContext.toTransportDelete() = OrDeleteResponse(
     requestId = this.requestId.asString().takeIf { it.isNotBlank() },
     result = if (state == CpmkState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
     errors = errors.toTransportErrors(),
-    or = orResponse.toTransportOr()
+    or = orResponse.toTransportOr(),
+    responseType = "delete"
 )
 
 fun CpmkContext.toTransportSearch() = OrSearchResponse(
     requestId = this.requestId.asString().takeIf { it.isNotBlank() },
     result = if (state == CpmkState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
     errors = errors.toTransportErrors(),
-    ors = orsResponse.toTransportOr()
+    ors = orsResponse.toTransportOr(),
+    responseType = "search"
 )
 
 
@@ -64,7 +69,8 @@ private fun CpmkOr.toTransportOr(): OrResponseObject = OrResponseObject(
     walletNumber = walletNumber.takeIf { it.isNotBlank() },
     fiatCurrency = fiatCurrency.toTransportOr(),
     cryptoCurrency = cryptoCurrency.toTransportOr(),
-    action = action.toTransportOr()
+    action = action.toTransportOr(),
+    value = value
 )
 
 private fun Set<CpmkOrPermissionClient>.toTransportOr(): Set<OrPermissions>? = this

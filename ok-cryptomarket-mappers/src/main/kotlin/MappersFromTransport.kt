@@ -88,7 +88,8 @@ private fun OrCreateObject.toInternal(): CpmkOr = CpmkOr(
     walletNumber = this.walletNumber ?: "",
     fiatCurrency = this.fiatCurrency.fromTransport(),
     cryptoCurrency = this.cryptoCurrency.fromTransport(),
-    action = this.action.fromTransport()
+    action = this.action.fromTransport(),
+    value = this.value ?: 0F
 )
 
 private fun OrUpdateObject.toInternal(): CpmkOr = CpmkOr(
@@ -97,7 +98,8 @@ private fun OrUpdateObject.toInternal(): CpmkOr = CpmkOr(
     walletNumber = this.walletNumber ?: "",
     fiatCurrency = this.fiatCurrency.fromTransport(),
     cryptoCurrency = this.cryptoCurrency.fromTransport(),
-    action = this.action.fromTransport()
+    action = this.action.fromTransport(),
+    value = this.value ?: 0F
 )
 
 private fun FiatCurrency?.fromTransport(): CpmkFiatCurrency = when (this) {

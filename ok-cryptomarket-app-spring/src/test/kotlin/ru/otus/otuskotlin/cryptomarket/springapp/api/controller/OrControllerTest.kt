@@ -1,48 +1,47 @@
 package ru.otus.otuskotlin.cryptomarket.springapp.api.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import org.assertj.core.api.Assertions.assertThat
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.coVerify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.web.reactive.function.BodyInserters
 import ru.otus.otuskotlin.cryptomarket.api.models.*
 import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.mappers.*
-import ru.otus.otuskotlin.cryptomarket.stubs.CpmkOrStub
-
+import ru.otus.otuskotlin.cryptomarket.springapp.service.CpmkOrBlockingProcessor
 
 // Temporary simple test with stubs
-@WebMvcTest(OrController::class)
-internal class OrControllerTest {
+@WebFluxTest(OrController::class)
+internal class AdControllerTest {
     @Autowired
-    private lateinit var mvc: MockMvc
+    private lateinit var webClient: WebTestClient
 
-    @Autowired
-    private lateinit var mapper: ObjectMapper
+    @MockkBean(relaxUnitFun = true)
+    private lateinit var processor: CpmkOrBlockingProcessor
 
     @Test
     fun createOr() = testStubOr(
         "/or/create",
         OrCreateRequest(),
-        CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportCreate()
+        CpmkContext().toTransportCreate()
     )
 
     @Test
     fun readOr() = testStubOr(
         "/or/read",
         OrReadRequest(),
-        CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportRead()
+        CpmkContext().toTransportRead()
     )
 
     @Test
     fun updateOr() = testStubOr(
         "/or/update",
         OrUpdateRequest(),
-        CpmkContext().apply { orResponse = CpmkOrStub.get() }.toTransportUpdate()
+        CpmkContext().toTransportUpdate()
     )
 
     @Test
@@ -56,23 +55,26 @@ internal class OrControllerTest {
     fun searchOr() = testStubOr(
         "/or/search",
         OrSearchRequest(),
-        CpmkContext().apply { orsResponse.add(CpmkOrStub.get()) }.toTransportSearch()
+        CpmkContext().toTransportSearch()
     )
 
-    private fun <Req : Any, Res : Any> testStubOr(
+    private inline fun <reified Req : Any, reified Res : Any> testStubOr(
         url: String,
         requestObj: Req,
         responseObj: Res,
     ) {
-        val request = mapper.writeValueAsString(requestObj)
-        val response = mapper.writeValueAsString(responseObj)
-
-        mvc.perform(
-            post(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(request)
-        )
-            .andExpect(status().isOk)
-            .andExpect(content().json(response))
+        webClient
+            .post()
+            .uri(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromValue(requestObj))
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(Res::class.java)
+            .value {
+                println("RESPONSE: $it")
+                assertThat(it).isEqualTo(responseObj)
+            }
+        coVerify { processor.exec(any()) }
     }
 }

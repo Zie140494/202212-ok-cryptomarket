@@ -35,7 +35,7 @@ class KafkaControllerTest {
                         OrCreateRequest(
                         requestId = "11111111-1111-1111-1111-111111111111",
                         or = OrCreateObject(
-                            accountNumber = "123",
+                            accountNumber = "012345678901234567890",
                             walletNumber = "x0123456789",
                             fiatCurrency = FiatCurrency.RUB,
                             cryptoCurrency = CryptoCurrency.BTC,

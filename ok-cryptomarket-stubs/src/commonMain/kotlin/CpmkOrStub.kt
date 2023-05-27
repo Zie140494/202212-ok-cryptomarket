@@ -18,7 +18,7 @@ object CpmkOrStub {
     )
 
     private fun cpmkOrDemand(id: String, filter: String, action: CpmkAction) =
-        cpmkOr(OR_BUY1, id = id, filter = filter, action = action)
+        cpmkOr(get(), id = id, filter = filter, action = action)
 
     private fun cpmkOr(base: CpmkOr, id: String, filter: String, action: CpmkAction) = base.copy(
         id = CpmkOrId(id),

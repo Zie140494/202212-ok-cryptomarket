@@ -9,5 +9,7 @@ enum class CpmkStubs {
     BAD_CRYPTOCURRENCY,
     BAD_FIAT_CURRENCY,
     CANNOT_DELETE,
-    BAD_SEARCH_STRING
+    BAD_SEARCH_STRING,
+    DB_ERROR,
+    BAD_ID
 }

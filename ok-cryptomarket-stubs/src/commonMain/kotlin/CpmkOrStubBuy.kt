@@ -6,10 +6,10 @@ object CpmkOrStubBuy {
     val OR_BUY: CpmkOr
         get() = CpmkOr(
             id = CpmkOrId("666"),
-           accountNumber = "012345678901234567890",
-            walletNumber = "x0-9525847222266666666",
-            fiatCurrency = CpmkFiatCurrency.RUB,
-            cryptoCurrency = CpmkCryptoCurrency.BTC,
+           accountNumber = "accNum crypto 1",
+            walletNumber = "walNum crypto 1",
+            fiatCurrency = CpmkFiatCurrency.NONE,
+            cryptoCurrency = CpmkCryptoCurrency.NONE,
             action = CpmkAction.BUY,
             ownerId = CpmkUserId("user-1"),
             permissionsClient = mutableSetOf(
