@@ -6,8 +6,8 @@ import ru.otus.otuskotlin.cryptomarket.cor.ICorChainDsl
 import ru.otus.otuskotlin.cryptomarket.cor.worker
 import ru.otus.otuskotlin.cryptomarket.common.helpers.fail
 
-fun ICorChainDsl<CpmkContext>.validateAccountNumberNotEmpty(accountNumber: String) = worker {
-    this.accountNumber = accountNumber
+fun ICorChainDsl<CpmkContext>.validateAccountNumberNotEmpty(title: String) = worker {
+    this.title = title
     on { orValidating.accountNumber.isEmpty() }
     handle {
         fail(

@@ -5,23 +5,29 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.coVerify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
 import ru.otus.otuskotlin.cryptomarket.api.models.*
+import ru.otus.otuskotlin.cryptomarket.backend.repo.sql.RepoOrSQL
+import ru.otus.otuskotlin.cryptomarket.biz.CpmkOrProcessor
 import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.mappers.*
-import ru.otus.otuskotlin.cryptomarket.springapp.service.CpmkOrBlockingProcessor
+import ru.otus.otuskotlin.cryptomarket.springapp.config.CorConfig
 
 // Temporary simple test with stubs
-@WebFluxTest(OrController::class)
-internal class AdControllerTest {
+@WebFluxTest(OrController::class, CorConfig::class)
+internal class OrControllerTest {
     @Autowired
     private lateinit var webClient: WebTestClient
 
     @MockkBean(relaxUnitFun = true)
-    private lateinit var processor: CpmkOrBlockingProcessor
+    private lateinit var processor: CpmkOrProcessor
+
+    @MockkBean
+    private lateinit var repo: RepoOrSQL
 
     @Test
     fun createOr() = testStubOr(

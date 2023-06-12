@@ -4,6 +4,7 @@ import kotlinx.datetime.Clock
 import ru.otus.otuskotlin.cryptomarket.api.logs.mapper.toLog
 import ru.otus.otuskotlin.cryptomarket.api.models.IRequest
 import ru.otus.otuskotlin.cryptomarket.api.models.IResponse
+import ru.otus.otuskotlin.cryptomarket.biz.CpmkOrProcessor
 import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.common.helpers.asCpmkError
 import ru.otus.otuskotlin.cryptomarket.common.models.CpmkCommand
@@ -11,11 +12,10 @@ import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 import ru.otus.otuskotlin.cryptomarket.logging.common.ICmLogWrapper
 import ru.otus.otuskotlin.cryptomarket.mappers.fromTransport
 import ru.otus.otuskotlin.cryptomarket.mappers.toTransportOr
-import ru.otus.otuskotlin.cryptomarket.springapp.service.CpmkOrBlockingProcessor
 
 
-suspend inline fun <reified Q : IRequest, reified R : IResponse> processV1(
-    processor: CpmkOrBlockingProcessor,
+suspend inline fun <reified Q : IRequest, reified R : IResponse> process(
+    processor: CpmkOrProcessor,
     command: CpmkCommand? = null,
     request: Q,
     logger: ICmLogWrapper,

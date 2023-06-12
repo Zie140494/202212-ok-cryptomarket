@@ -5,8 +5,8 @@ import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 import ru.otus.otuskotlin.cryptomarket.cor.ICorChainDsl
 import ru.otus.otuskotlin.cryptomarket.cor.worker
 
-fun ICorChainDsl<CpmkContext>.initStatus(walletNumber: String) = worker() {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.initStatus(title: String) = worker() {
+    this.title = title
     on { state == CpmkState.NONE }
     handle { state = CpmkState.RUNNING }
 }

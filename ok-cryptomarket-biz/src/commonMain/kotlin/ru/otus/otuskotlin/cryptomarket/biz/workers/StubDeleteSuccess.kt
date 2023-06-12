@@ -7,8 +7,8 @@ import ru.otus.otuskotlin.cryptomarket.cor.ICorChainDsl
 import ru.otus.otuskotlin.cryptomarket.cor.worker
 import ru.otus.otuskotlin.cryptomarket.stubs.CpmkOrStub
 
-fun ICorChainDsl<CpmkContext>.stubDeleteSuccess(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.stubDeleteSuccess(title: String) = worker {
+    this.title = title
     on { stubCase == CpmkStubs.SUCCESS && state == CpmkState.RUNNING }
     handle {
         state = CpmkState.FINISHING

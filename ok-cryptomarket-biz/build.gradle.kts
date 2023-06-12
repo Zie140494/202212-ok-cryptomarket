@@ -28,6 +28,10 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
 
+                implementation(project(":ok-cryptomarket-repo-stubs"))
+                implementation(project(":ok-cryptomarket-repo-tests"))
+                implementation(project(":ok-cryptomarket-repo-in-memory"))
+
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
             }
         }

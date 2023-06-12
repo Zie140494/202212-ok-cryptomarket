@@ -6,8 +6,8 @@ import ru.otus.otuskotlin.cryptomarket.cor.worker
 import ru.otus.otuskotlin.cryptomarket.common.helpers.errorValidation
 import ru.otus.otuskotlin.cryptomarket.common.helpers.fail
 
-fun ICorChainDsl<CpmkContext>.validateWalletNumberNotEmpty(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.validateWalletNumberNotEmpty(title: String) = worker {
+    this.title = title
     on { orValidating.walletNumber.isEmpty() }
     handle {
         fail(

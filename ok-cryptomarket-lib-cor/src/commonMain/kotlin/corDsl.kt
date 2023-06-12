@@ -9,8 +9,8 @@ import ru.otus.otuskotlin.cryptomarket.cor.handlers.executeParallel
  */
 @CorDslMarker
 interface ICorExecDsl<T> {
-    var walletNumber: String
-    var accountNumber: String
+    var title: String
+    var description: String
     fun on(function: suspend T.() -> Boolean)
     fun except(function: suspend T.(e: Throwable) -> Unit)
 
@@ -83,13 +83,13 @@ fun <T> ICorChainDsl<T>.worker(function: ICorWorkerDsl<T>.() -> Unit) {
  * Создает рабочего с on и except по умолчанию
  */
 fun <T> ICorChainDsl<T>.worker(
-    walletNumber: String,
-    accountNumber: String = "",
+    title: String,
+    description: String = "",
     blockHandle: T.() -> Unit
 ) {
     add(CorWorkerDsl<T>().also {
-        it.walletNumber = walletNumber
-        it.accountNumber = accountNumber
+        it.title = title
+        it.description = description
         it.handle(blockHandle)
     })
 }

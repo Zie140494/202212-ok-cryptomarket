@@ -12,9 +12,9 @@ import kotlin.reflect.KClass
 
 private val machine = SMOrStateResolver()
 private val clazz: KClass<*> = ICorChainDsl<CpmkContext>::computeOrState::class
-fun ICorChainDsl<CpmkContext>.computeOrState(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
-    this.accountNumber = "Вычисление состояния объявления"
+fun ICorChainDsl<CpmkContext>.computeOrState(title: String) = worker {
+    this.title = title
+    this.description = "Вычисление состояния заявки"
     on { state == CpmkState.RUNNING }
     handle {
         val log = settings.loggerProvider.logger(clazz)

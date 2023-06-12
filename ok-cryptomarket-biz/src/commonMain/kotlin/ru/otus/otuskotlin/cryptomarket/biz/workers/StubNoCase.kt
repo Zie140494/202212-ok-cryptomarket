@@ -7,8 +7,8 @@ import ru.otus.otuskotlin.cryptomarket.common.helpers.fail
 import ru.otus.otuskotlin.cryptomarket.common.models.CpmkError
 import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 
-fun ICorChainDsl<CpmkContext>.stubNoCase(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.stubNoCase(title: String) = worker {
+    this.title = title
     on { state == CpmkState.RUNNING }
     handle {
         fail(

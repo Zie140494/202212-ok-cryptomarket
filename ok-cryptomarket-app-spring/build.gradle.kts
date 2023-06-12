@@ -27,7 +27,7 @@ dependencies {
 
     // transport models
     implementation(project(":ok-cryptomarket-common"))
-//    implementation(project(":ok-cryptomarket-lib-logging-logback"))
+    implementation(project(":ok-cryptomarket-lib-logging-logback"))
 
     // api
     implementation(project(":ok-cryptomarket-api-jackson"))
@@ -39,6 +39,14 @@ dependencies {
     // Logging
     implementation(project(":ok-cryptomarket-mappers-log1"))
     implementation(project(":ok-cryptomarket-api-log1"))
+
+    // Repository
+    implementation(project(":ok-cryptomarket-repo-in-memory"))
+
+    // Repo
+    implementation(project(":ok-cryptomarket-repo-stubs"))
+    implementation(project(":ok-cryptomarket-repo-in-memory"))
+    implementation(project(":ok-cryptomarket-repo-postgresql"))
 
     // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
