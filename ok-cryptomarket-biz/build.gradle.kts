@@ -20,6 +20,7 @@ kotlin {
                 implementation(project(":ok-cryptomarket-common"))
                 implementation(project(":ok-cryptomarket-stubs"))
                 implementation(project(":ok-cryptomarket-lib-cor"))
+                implementation(project(":ok-cryptomarket-auth"))
             }
         }
         @Suppress("UNUSED_VARIABLE")

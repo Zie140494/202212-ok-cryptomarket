@@ -42,6 +42,7 @@ include("ok-cryptomarket-app-spring")
 
 include("ok-cryptomarket-biz")
 include("ok-cryptomarket-app-kafka")
+include("ok-cryptomarket-auth")
 
 include("ok-cryptomarket-lib-cor")
 include("ok-cryptomarket-lib-logging-common")
