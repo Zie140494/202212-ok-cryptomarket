@@ -5,6 +5,7 @@ import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
 import ru.otus.otuskotlin.cryptomarket.common.models.*
 import ru.otus.otuskotlin.cryptomarket.common.stubs.CpmkStubs
 import ru.otus.otuskotlin.cryptomarket.mappers.exceptions.UnknownRequestClass
+import ru.otus.otuskotlin.cryptomarket.common.models.CpmkOrLock
 
 
 fun CpmkContext.fromTransport(request: IRequest) = when (request) {
@@ -18,8 +19,8 @@ fun CpmkContext.fromTransport(request: IRequest) = when (request) {
 
 private fun String?.toOrId() = this?.let { CpmkOrId(it) } ?: CpmkOrId.NONE
 private fun String?.toOrWithId() = CpmkOr(id = this.toOrId())
+private fun String?.toOrLock() = this?.let { CpmkOrLock(it) } ?: CpmkOrLock.NONE
 private fun IRequest?.requestId() = this?.requestId?.let { CpmkRequestId(it) } ?: CpmkRequestId.NONE
-
 private fun OrDebug?.transportToWorkMode(): CpmkWorkMode = when (this?.mode) {
     OrRequestDebugMode.PROD -> CpmkWorkMode.PROD
     OrRequestDebugMode.TEST -> CpmkWorkMode.TEST

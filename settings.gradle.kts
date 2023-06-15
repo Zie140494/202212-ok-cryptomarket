@@ -45,7 +45,14 @@ include("ok-cryptomarket-app-kafka")
 
 include("ok-cryptomarket-lib-cor")
 include("ok-cryptomarket-lib-logging-common")
+include("ok-cryptomarket-lib-logging-logback")
 
 include("ok-cryptomarket-mappers-log1")
 
 include("ok-cryptomarket-api-log1")
+
+
+include("ok-cryptomarket-repo-in-memory")
+include("ok-cryptomarket-repo-postgresql")
+include("ok-cryptomarket-repo-stubs")
+include("ok-cryptomarket-repo-tests")

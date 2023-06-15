@@ -18,3 +18,11 @@ springdoc:
     urls:
       - name: or
         url: specs-or.yaml
+
+sql:
+  url: ${SQL_URL:jdbc:postgresql://localhost:5432/cryptomarket}
+  user: ${SQL_USER:postgres}
+  password: ${SQL_PASSWORD:cryptomarket-pass}
+  schema: ${SQL_SCHEMA:cryptomarket}
+  drop-database: ${SQL_DROP_DATABASE:false}
+  fast-migration: ${SQL_FAST_MIGRATION:true}

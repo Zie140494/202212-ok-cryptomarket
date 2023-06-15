@@ -17,9 +17,16 @@ data class CpmkOr(
     var timeUpdated: Instant = Instant.NONE,
     var value: Float = 0F,
     var ownerId: CpmkUserId = CpmkUserId.NONE,
+    var lock: CpmkOrLock = CpmkOrLock.NONE,
     val permissionsClient: MutableSet<CpmkOrPermissionClient> = mutableSetOf()
 ){
     fun deepCopy(): CpmkOr = copy(
         permissionsClient = permissionsClient.toMutableSet(),
     )
+
+    fun isEmpty() = this == NONE
+
+    companion object {
+        val NONE = CpmkOr()
+    }
 }

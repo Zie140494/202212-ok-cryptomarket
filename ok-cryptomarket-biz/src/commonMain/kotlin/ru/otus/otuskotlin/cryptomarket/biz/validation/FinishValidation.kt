@@ -5,16 +5,16 @@ import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 import ru.otus.otuskotlin.cryptomarket.cor.ICorChainDsl
 import ru.otus.otuskotlin.cryptomarket.cor.worker
 
-fun ICorChainDsl<CpmkContext>.finishAdValidation(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.finishOrValidation(title: String) = worker {
+    this.title = title
     on { state == CpmkState.RUNNING }
     handle {
         orValidated = orValidating
     }
 }
 
-fun ICorChainDsl<CpmkContext>.finishAdFilterValidation(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.finishOrFilterValidation(title: String) = worker {
+    this.title = title
     on { state == CpmkState.RUNNING }
     handle {
         orFilterValidated = orFilterValidating

@@ -6,8 +6,8 @@ import ru.otus.otuskotlin.cryptomarket.common.helpers.fail
 import ru.otus.otuskotlin.cryptomarket.cor.ICorChainDsl
 import ru.otus.otuskotlin.cryptomarket.cor.worker
 
-fun ICorChainDsl<CpmkContext>.validateAccountNumberHasContent(accountNumber: String) = worker {
-    this.accountNumber = accountNumber
+fun ICorChainDsl<CpmkContext>.validateAccountNumberHasContent(title: String) = worker {
+    this.title = title
     val regExp = Regex("\\p{Digit}")
     on { orValidating.accountNumber.isNotEmpty() && ! orValidating.accountNumber.contains(regExp) }
     handle {

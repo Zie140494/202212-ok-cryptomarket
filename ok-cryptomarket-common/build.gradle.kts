@@ -15,7 +15,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common:1.6.0"))
+                implementation(kotlin("stdlib-common"))
 
                 api(project(":ok-cryptomarket-lib-logging-common"))
 

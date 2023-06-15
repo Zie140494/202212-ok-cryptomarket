@@ -11,11 +11,11 @@ import ru.otus.otuskotlin.cryptomarket.cor.*
 class CorChain<T>(
     private val execs: List<ICorExec<T>>,
     private val handler: suspend (T, List<ICorExec<T>>) -> Unit,
-    walletNumber: String,
-    accountNumber: String = "",
+    title: String,
+    description: String = "",
     blockOn: suspend T.() -> Boolean = { true },
     blockExcept: suspend T.(Throwable) -> Unit = {},
-) : AbstractCorExec<T>(walletNumber, accountNumber, blockOn, blockExcept) {
+) : AbstractCorExec<T>(title, description, blockOn, blockExcept) {
     override suspend fun handle(context: T) = handler(context, execs)
 }
 
@@ -46,8 +46,8 @@ class CorChainDsl<T>(
     }
 
     override fun build(): ICorExec<T> = CorChain(
-        walletNumber = walletNumber,
-        accountNumber = accountNumber,
+        title = title,
+        description = description,
         execs = workers.map { it.build() },
         handler = handler,
         blockOn = blockOn,

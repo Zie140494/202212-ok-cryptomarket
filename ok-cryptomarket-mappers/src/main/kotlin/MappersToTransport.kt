@@ -70,7 +70,8 @@ private fun CpmkOr.toTransportOr(): OrResponseObject = OrResponseObject(
     fiatCurrency = fiatCurrency.toTransportOr(),
     cryptoCurrency = cryptoCurrency.toTransportOr(),
     action = action.toTransportOr(),
-    value = value
+    value = value,
+    lock = lock.takeIf { it != CpmkOrLock.NONE }?.asString(),
 )
 
 private fun Set<CpmkOrPermissionClient>.toTransportOr(): Set<OrPermissions>? = this

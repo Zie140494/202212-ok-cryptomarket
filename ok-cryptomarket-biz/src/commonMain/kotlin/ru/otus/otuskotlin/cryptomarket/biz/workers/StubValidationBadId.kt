@@ -7,8 +7,8 @@ import ru.otus.otuskotlin.cryptomarket.common.models.CpmkError
 import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 import ru.otus.otuskotlin.cryptomarket.common.stubs.CpmkStubs
 
-fun ICorChainDsl<CpmkContext>.stubValidationBadId(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
+fun ICorChainDsl<CpmkContext>.stubValidationBadId(title: String) = worker {
+    this.title = title
     on { stubCase == CpmkStubs.BAD_ID && state == CpmkState.RUNNING }
     handle {
         state = CpmkState.FAILING

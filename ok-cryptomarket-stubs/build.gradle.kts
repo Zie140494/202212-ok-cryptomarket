@@ -10,7 +10,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common:1.6.0"))
+                implementation(kotlin("stdlib-common"))
 
                 implementation(project(":ok-cryptomarket-common"))
             }
@@ -23,12 +23,12 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(kotlin("stdlib:1.6.0"))
+                implementation(kotlin("stdlib"))
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit:1.6.0"))
+                implementation(kotlin("test-junit"))
             }
         }
     }

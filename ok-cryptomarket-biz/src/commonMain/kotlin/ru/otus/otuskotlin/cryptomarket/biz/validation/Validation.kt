@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.cryptomarket.cor.chain
 
 fun ICorChainDsl<CpmkContext>.validation(block: ICorChainDsl<CpmkContext>.() -> Unit) = chain {
     block()
-    walletNumber = "Валидация"
+    title = "Валидация"
 
     on { state == CpmkState.RUNNING }
 }

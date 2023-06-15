@@ -2,54 +2,36 @@ package ru.otus.otuskotlin.cryptomarket.springapp.api.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.otus.otuskotlin.cryptomarket.api.models.*
-import ru.otus.otuskotlin.cryptomarket.common.CpmkContext
+import ru.otus.otuskotlin.cryptomarket.biz.CpmkOrProcessor
+import ru.otus.otuskotlin.cryptomarket.common.models.CpmkCommand
+import ru.otus.otuskotlin.cryptomarket.logging.common.CmLoggerProvider
 import ru.otus.otuskotlin.cryptomarket.mappers.*
-import ru.otus.otuskotlin.cryptomarket.springapp.service.CpmkOrBlockingProcessor
 
 
 @RestController
 @RequestMapping("or")
 class OrController
     (
-    private val processor: CpmkOrBlockingProcessor,
+    private val processor: CpmkOrProcessor,
+    private val loggerProvider: CmLoggerProvider,
 ) {
     @PostMapping("create")
-    fun createAd(@RequestBody request: OrCreateRequest): OrCreateResponse {
-        val context = CpmkContext()
-        context.fromTransport(request)
-        processor.exec(context)
-        return context.toTransportCreate()
-    }
+    suspend fun createOr(@RequestBody request: OrCreateRequest): OrCreateResponse =
+        process(processor, CpmkCommand.CREATE, request = request, loggerProvider.logger(OrController::class), "or-create")
 
     @PostMapping("read")
-    fun readAd(@RequestBody request: OrReadRequest): OrReadResponse {
-        val context =CpmkContext()
-        context.fromTransport(request)
-        processor.exec(context)
-        return context.toTransportRead()
-    }
+    suspend fun  readOr(@RequestBody request: OrReadRequest): OrReadResponse =
+        process(processor, CpmkCommand.READ, request = request, loggerProvider.logger(OrController::class), "or-read")
 
     @RequestMapping("update", method = [RequestMethod.POST])
-    fun updateAd(@RequestBody request: OrUpdateRequest): OrUpdateResponse {
-        val context = CpmkContext()
-        context.fromTransport(request)
-        processor.exec(context)
-        return context.toTransportUpdate()
-    }
+    suspend fun  updateOr(@RequestBody request: OrUpdateRequest): OrUpdateResponse =
+        process(processor, CpmkCommand.UPDATE, request = request, loggerProvider.logger(OrController::class), "or-update")
 
     @PostMapping("delete")
-    fun deleteAd(@RequestBody request: OrDeleteRequest): OrDeleteResponse {
-        val context = CpmkContext()
-        context.fromTransport(request)
-        processor.exec(context)
-        return context.toTransportDelete()
-    }
+    suspend fun  deleteOr(@RequestBody request: OrDeleteRequest): OrDeleteResponse =
+        process(processor, CpmkCommand.DELETE, request = request, loggerProvider.logger(OrController::class), "or-delete")
 
     @PostMapping("search")
-    fun searchAd(@RequestBody request: OrSearchRequest): OrSearchResponse {
-        val context = CpmkContext()
-        context.fromTransport(request)
-        processor.exec(context)
-        return context.toTransportSearch()
-    }
+    suspend fun  searchOr(@RequestBody request: OrSearchRequest): OrSearchResponse =
+        process(processor, CpmkCommand.SEARCH, request = request, loggerProvider.logger(OrController::class), "or-search")
 }

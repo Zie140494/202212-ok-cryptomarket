@@ -7,9 +7,9 @@ import ru.otus.otuskotlin.cryptomarket.common.models.CpmkError
 import ru.otus.otuskotlin.cryptomarket.common.models.CpmkState
 import ru.otus.otuskotlin.cryptomarket.common.stubs.CpmkStubs
 
-fun ICorChainDsl<CpmkContext>.stubDbError(walletNumber: String) = worker {
-    this.walletNumber = walletNumber
-    on { stubCase == CpmkStubs.DB_ERROR && state == CpmkState.RUNNING }
+fun ICorChainDsl<CpmkContext>.stubDbError(title: String) = worker {
+    this.title = title
+    on { this.stubCase == CpmkStubs.DB_ERROR && this.state == CpmkState.RUNNING }
     handle {
         state = CpmkState.FAILING
         this.errors.add(
