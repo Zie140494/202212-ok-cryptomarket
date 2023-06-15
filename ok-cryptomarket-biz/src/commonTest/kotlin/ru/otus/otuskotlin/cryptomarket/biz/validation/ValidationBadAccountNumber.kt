@@ -19,7 +19,7 @@ fun validationAccountNumberCorrect(command: CpmkCommand, processor: CpmkOrProces
         orRequest = CpmkOr(
             id = stub.id,
             walletNumber = "abc",
-            accountNumber = "abc",
+            accountNumber = "01234567890123456789",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -29,7 +29,7 @@ fun validationAccountNumberCorrect(command: CpmkCommand, processor: CpmkOrProces
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(CpmkState.FAILING, ctx.state)
-    assertEquals("abc", ctx.orValidated.accountNumber)
+    assertEquals("01234567890123456789", ctx.orValidated.accountNumber)
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -41,7 +41,7 @@ fun validationAccountNumberTrim(command: CpmkCommand, processor: CpmkOrProcessor
         orRequest = CpmkOr(
             id = stub.id,
             walletNumber = "abc",
-            accountNumber = " \n\tabc \n\t",
+            accountNumber = " \n\t01234567890123456789 \n\t",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -51,7 +51,7 @@ fun validationAccountNumberTrim(command: CpmkCommand, processor: CpmkOrProcessor
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(CpmkState.FAILING, ctx.state)
-    assertEquals("abc", ctx.orValidated.accountNumber)
+    assertEquals("01234567890123456789", ctx.orValidated.accountNumber)
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -74,8 +74,8 @@ fun validationAccountNumberEmpty(command: CpmkCommand, processor: CpmkOrProcesso
     assertEquals(1, ctx.errors.size)
     assertEquals(CpmkState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("description", error?.field)
-    assertContains(error?.message ?: "", "description")
+    assertEquals("accountNumber", error?.field)
+    assertContains(error?.message ?: "", "accountNumber")
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -98,6 +98,6 @@ fun validationAccountNumberSymbols(command: CpmkCommand, processor: CpmkOrProces
     assertEquals(1, ctx.errors.size)
     assertEquals(CpmkState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("description", error?.field)
-    assertContains(error?.message ?: "", "description")
+    assertEquals("accountNumber", error?.field)
+    assertContains(error?.message ?: "", "accountNumber")
 }

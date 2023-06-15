@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.cryptomarket.logging.jvm
 import ch.qos.logback.classic.Logger
 import net.logstash.logback.argument.StructuredArguments
 import org.slf4j.Marker
+import org.slf4j.event.KeyValuePair
 import org.slf4j.event.Level
 import org.slf4j.event.LoggingEvent
 import ru.otus.otuskotlin.cryptomarket.logging.common.ICmLogWrapper
@@ -36,7 +37,7 @@ class CmLogWrapperLogback(
             override fun getTimeStamp(): Long = Instant.now().toEpochMilli()
             override fun getThreadName(): String = Thread.currentThread().name
             override fun getMessage(): String = msg
-            fun getArguments(): MutableList<Any> = argumentArray.toMutableList()
+            override fun getArguments(): MutableList<Any> = argumentArray.toMutableList()
             override fun getArgumentArray(): Array<out Any> = data
                 ?.let { d ->
                     listOfNotNull(
@@ -47,13 +48,15 @@ class CmLogWrapperLogback(
                 ?: objs?.mapNotNull { StructuredArguments.keyValue(it.key, it.value) }?.toTypedArray()
                 ?: emptyArray()
 
-            fun getMarkers(): MutableList<Marker> = mutableListOf(marker)
+            override fun getMarkers(): MutableList<Marker> = mutableListOf(marker)
+            override fun getKeyValuePairs(): MutableList<KeyValuePair> = objs
+                ?.mapNotNull {
+                    it.let { KeyValuePair(it.key, it.value) }
+                }
+                ?.toMutableList()
+                ?: mutableListOf()
 
             override fun getLevel(): Level = level
-            override fun getMarker(): Marker {
-                return marker
-            }
-
             override fun getLoggerName(): String = logger.name
         })
     }

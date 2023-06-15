@@ -12,6 +12,7 @@ fun ICorChainDsl<CpmkContext>.validateIdProperFormat(title: String) = worker {
 
     // Может быть вынесен в CpmkOrId для реализации различных форматов
     val regExp = Regex("^[0-9a-zA-Z-]+$")
+    val t = "!@#\$%^&*(),.{}".matches(regExp)
     on { orValidating.id != CpmkOrId.NONE && ! orValidating.id.asString().matches(regExp) }
     handle {
         val encodedId = orValidating.id.asString()

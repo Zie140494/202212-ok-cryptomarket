@@ -18,7 +18,7 @@ class BizRepoSearchTest {
     private val initAd = CpmkOr(
         id = CpmkOrId("123"),
         walletNumber = "abc",
-        accountNumber = "abc",
+        accountNumber = "12345678901234567890",
         ownerId = userId,
         fiatCurrency = CpmkFiatCurrency.RUB,
         cryptoCurrency = CpmkCryptoCurrency.BTC,

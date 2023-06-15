@@ -48,7 +48,7 @@ class BizRepoCreateTest {
             workMode = CpmkWorkMode.TEST,
             orRequest = CpmkOr(
                 walletNumber = "abc",
-                accountNumber = "abc",
+                accountNumber = "12345678901234567890",
                 fiatCurrency = CpmkFiatCurrency.RUB,
                 cryptoCurrency = CpmkCryptoCurrency.BTC,
                 action = CpmkAction.BUY,
@@ -58,7 +58,7 @@ class BizRepoCreateTest {
         assertEquals(CpmkState.FINISHING, ctx.state)
         assertNotEquals(CpmkOrId.NONE, ctx.orResponse.id)
         assertEquals("abc", ctx.orResponse.walletNumber)
-        assertEquals("abc", ctx.orResponse.accountNumber)
+        assertEquals("12345678901234567890", ctx.orResponse.accountNumber)
         assertEquals(CpmkFiatCurrency.RUB, ctx.orResponse.fiatCurrency)
         assertEquals(CpmkCryptoCurrency.BTC, ctx.orResponse.cryptoCurrency)
         assertEquals(CpmkAction.BUY, ctx.orResponse.action)

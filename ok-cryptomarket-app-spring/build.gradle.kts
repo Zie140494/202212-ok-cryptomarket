@@ -19,11 +19,13 @@ dependencies {
     // implementation("org.springframework.boot:spring-boot-starter-websocket") // Controller, Service, etc..
     implementation("org.springdoc:springdoc-openapi-ui:$springdocOpenapiUiVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // from models to json and Vice versa
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$stdLibVersion") // for spring-boot app
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$stdLibVersion") // for spring-boot app
+    implementation("org.jetbrains.kotlin:kotlin-reflect") // for spring-boot app
+    implementation("org.jetbrains.kotlin:kotlin-stdlib") // for spring-boot app
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${coroutinesVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${coroutinesVersion}")
+
+    //implementation("org.jetbrains.kotlin:kotlin-main-kts:1.6.0")
 
     // transport models
     implementation(project(":ok-cryptomarket-common"))

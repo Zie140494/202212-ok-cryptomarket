@@ -21,7 +21,7 @@ fun validationWalletNumberCorrect(command: CpmkCommand, processor: CpmkOrProcess
         orRequest = CpmkOr(
             id = stub.id,
             walletNumber = "abc",
-            accountNumber = "abc",
+            accountNumber = "01234567890123456789",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -43,7 +43,7 @@ fun validationWalletNumberTrim(command: CpmkCommand, processor: CpmkOrProcessor)
         orRequest = CpmkOr(
             id = stub.id,
             walletNumber = " \n\t abc \t\n ",
-            accountNumber = "abc",
+            accountNumber = "01234567890123456789",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -65,7 +65,7 @@ fun validationWalletNumberEmpty(command: CpmkCommand, processor: CpmkOrProcessor
         orRequest = CpmkOr(
             id = stub.id,
             walletNumber = "",
-            accountNumber = "abc",
+            accountNumber = "01234567890123456789",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -76,8 +76,8 @@ fun validationWalletNumberEmpty(command: CpmkCommand, processor: CpmkOrProcessor
     assertEquals(1, ctx.errors.size)
     assertEquals(CpmkState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("title", error?.field)
-    assertContains(error?.message ?: "", "title")
+    assertEquals("walletNumber", error?.field)
+    assertContains(error?.message ?: "", "walletNumber")
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -89,7 +89,7 @@ fun validationWalletNumberSymbols(command: CpmkCommand, processor: CpmkOrProcess
         orRequest = CpmkOr(
             id = CpmkOrId("123"),
             walletNumber = "!@#$%^&*(),.{}",
-            accountNumber = "abc",
+            accountNumber = "01234567890123456789",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,
@@ -100,6 +100,6 @@ fun validationWalletNumberSymbols(command: CpmkCommand, processor: CpmkOrProcess
     assertEquals(1, ctx.errors.size)
     assertEquals(CpmkState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("title", error?.field)
-    assertContains(error?.message ?: "", "title")
+    assertEquals("walletNumber", error?.field)
+    assertContains(error?.message ?: "", "walletNumber")
 }

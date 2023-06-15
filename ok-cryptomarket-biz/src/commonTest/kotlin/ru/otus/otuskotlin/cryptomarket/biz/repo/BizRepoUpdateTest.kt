@@ -20,7 +20,7 @@ class BizRepoUpdateTest {
     private val initAd = CpmkOr(
         id = CpmkOrId("123"),
         walletNumber = "abc",
-        accountNumber = "abc",
+        accountNumber = "12345678901234567890",
         ownerId = userId,
         fiatCurrency = CpmkFiatCurrency.RUB,
         cryptoCurrency = CpmkCryptoCurrency.BTC,
@@ -38,8 +38,8 @@ class BizRepoUpdateTest {
                 isSuccess = true,
                 data = CpmkOr(
                     id = CpmkOrId("123"),
-                    walletNumber = "xyz",
-                    accountNumber = "xyz",
+                    walletNumber = "abc",
+                    accountNumber = "12345678901234567890",
                     fiatCurrency = CpmkFiatCurrency.RUB,
                     cryptoCurrency = CpmkCryptoCurrency.BTC,
                     action = CpmkAction.BUY,
@@ -58,8 +58,8 @@ class BizRepoUpdateTest {
     fun repoUpdateSuccessTest() = runTest {
         val adToUpdate = CpmkOr(
             id = CpmkOrId("123"),
-            walletNumber = "xyz",
-            accountNumber = "xyz",
+            walletNumber = "abc",
+            accountNumber = "12345678901234567890",
             fiatCurrency = CpmkFiatCurrency.RUB,
             cryptoCurrency = CpmkCryptoCurrency.BTC,
             action = CpmkAction.BUY,

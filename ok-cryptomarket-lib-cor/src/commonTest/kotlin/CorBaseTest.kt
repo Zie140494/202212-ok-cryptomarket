@@ -16,7 +16,7 @@ class CorBaseTest {
     @JsName("worker_should_execute_handle")
     fun `worker should execute handle`() = runTest {
         val worker = CorWorker<TestContext>(
-            walletNumber = "w1",
+            title = "w1",
             blockHandle = { history += "w1; " }
         )
         val ctx = TestContext()
@@ -28,7 +28,7 @@ class CorBaseTest {
     @JsName("worker_should_not_execute_when_off")
     fun `worker should not execute when off`() = runTest {
         val worker = CorWorker<TestContext>(
-            walletNumber = "w1",
+            title = "w1",
             blockOn = { status == CorStatuses.ERROR },
             blockHandle = { history += "w1; " }
         )
@@ -41,7 +41,7 @@ class CorBaseTest {
     @JsName("worker_should_handle_exception")
     fun `worker should handle exception`() = runTest {
         val worker = CorWorker<TestContext>(
-            walletNumber = "w1",
+            title = "w1",
             blockHandle = { throw RuntimeException("some error") },
             blockExcept = { e -> history += e.message }
         )
@@ -55,14 +55,14 @@ class CorBaseTest {
     fun `chain should execute workers`() = runTest {
         val createWorker = { title: String ->
             CorWorker<TestContext>(
-                walletNumber = title,
+                title = title,
                 blockOn = { status == CorStatuses.NONE },
                 blockHandle = { history += "$title; " }
             )
         }
         val chain = CorChain<TestContext>(
             execs = listOf(createWorker("w1"), createWorker("w2")),
-            walletNumber = "chain",
+            title = "chain",
             handler = ::executeSequential
         )
         val ctx = TestContext()
@@ -134,8 +134,8 @@ class CorBaseTest {
     fun `complex chain example`() = runTest {
         val chain = rootChain<TestContext> {
             worker {
-                walletNumber = "Инициализация статуса"
-                accountNumber = "При старте обработки цепочки, статус еще не установлен. Проверяем его"
+                title = "Инициализация статуса"
+                description = "При старте обработки цепочки, статус еще не установлен. Проверяем его"
 
                 on { status == CorStatuses.NONE }
                 handle { status = CorStatuses.RUNNING }
@@ -146,8 +146,8 @@ class CorBaseTest {
                 on { status == CorStatuses.RUNNING }
 
                 worker(
-                    walletNumber = "Лямбда обработчик",
-                    accountNumber = "Пример использования обработчика в виде лямбды"
+                    title = "Лямбда обработчик",
+                    description = "Пример использования обработчика в виде лямбды"
                 ) {
                     some += 4
                 }
@@ -158,7 +158,7 @@ class CorBaseTest {
                     some < 15
                 }
 
-                worker(walletNumber = "Increment some") {
+                worker(title = "Increment some") {
                     some++
                 }
             }
@@ -174,7 +174,7 @@ class CorBaseTest {
 }
 
 
-private fun ICorChainDsl<TestContext>.printResult() = worker(walletNumber = "Print example") {
+private fun ICorChainDsl<TestContext>.printResult() = worker(title = "Print example") {
     println("some = $some")
 }
 

@@ -9,7 +9,7 @@ import ru.otus.otuskotlin.cryptomarket.common.helpers.fail
 fun ICorChainDsl<CpmkContext>.validateWalletNumberHasContent(title: String) = worker {
     this.title = title
     val regExp = Regex("\\p{L}")
-    on { orValidating.walletNumber.isNotEmpty() && ! orValidating.walletNumber.contains(regExp) }
+    on { orValidating.walletNumber.isNotEmpty() &&  !orValidating.walletNumber.contains(regExp) }
     handle {
         fail(
             errorValidation(

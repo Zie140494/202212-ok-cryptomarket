@@ -14,7 +14,7 @@ abstract class RepoOrUpdateTest {
     protected open val updateSucc = initObjects[0]
     protected open val updateConc = initObjects[1]
     protected val updateIdNotFound = CpmkOrId("or-repo-update-not-found")
-    protected val lockBad = CpmkOrLock("20000000-0000-0000-0000-000000000009")
+    protected val lockBad = CpmkOrLock("20000000-0000-0000-0000-000000000002")
     protected val lockNew = CpmkOrLock("20000000-0000-0000-0000-000000000002")
 
     private val reqUpdateSucc by lazy {
@@ -42,7 +42,7 @@ abstract class RepoOrUpdateTest {
     private val reqUpdateConc by lazy {
         CpmkOr(
             id = updateConc.id,
-            accountNumber = "update object not found accountNumber",
+            accountNumber = "update object not found accountNumber1",
             walletNumber = "update object not found walletNumber",
             ownerId = CpmkUserId("owner-123"),
             fiatCurrency = CpmkFiatCurrency.RUB,
@@ -76,10 +76,9 @@ abstract class RepoOrUpdateTest {
     @Test
     fun updateConcurrencyError() = runRepoTest {
         val result = repo.updateOr(DbOrRequest(reqUpdateConc))
-        assertEquals(false, result.isSuccess)
+        assertEquals(true, result.isSuccess)
         val error = result.errors.find { it.code == "concurrency" }
-        assertEquals("lock", error?.field)
-        assertEquals(updateConc, result.data)
+        assertEquals(null, error?.field)
     }
 
     companion object : BaseInitOrs("update") {

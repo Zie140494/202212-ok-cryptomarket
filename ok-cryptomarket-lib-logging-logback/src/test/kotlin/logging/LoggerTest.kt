@@ -1,7 +1,7 @@
 package ru.otus.otuskotlin.cryptomarket.logging
 
 import kotlinx.coroutines.runBlocking
-import ru.otus.otuskotlin.cryptomarket.logging.jvm.mpLoggerLogback
+import ru.otus.otuskotlin.cryptomarket.logging.jvm.cmLoggerLogback
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import kotlin.test.Test
@@ -36,7 +36,7 @@ class LoggerTest {
 
         try {
             runBlocking {
-                val logger = mpLoggerLogback(this::class)
+                val logger = cmLoggerLogback(this::class)
                 logger.doWithLogging(logId, block = block)
             }
         } catch (ignore: RuntimeException) {
